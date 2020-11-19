@@ -1,0 +1,37 @@
+
+body{
+  background-color: LavenderBlush;
+}
+.divStyle{
+  margin: 5vh;
+  border: 2px solid rgb(208, 255, 0);
+  border-radius: 25px;
+  height: 250px;
+  padding: 20px;
+}
+
+.items{
+  width: 85%;
+  height: 53px;
+}
+.button{
+  position: absolute;
+  bottom: 10px;
+  left: 35%;
+}
+.wrapText{
+    overflow-wrap: break-word;
+}
+.stickyElement{
+  z-index: 1;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: yellow;
+}  
+.stickyBottom{
+  z-index: 1;
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+} 
