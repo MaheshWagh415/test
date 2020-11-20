@@ -1,6 +1,7 @@
 import React from "react";
 function TableView(props) {
   const obj = props.passData;
+  console.log(obj)
   return (
     <div>
       <table className="table">

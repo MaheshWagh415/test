@@ -35,3 +35,8 @@ body{
   position: sticky;
   bottom: 0;
 } 
+.addItem{
+  position: absolute;
+  top: 1px;
+  right: 10px;
+}
