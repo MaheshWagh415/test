@@ -11,8 +11,8 @@ export class ImageGrid extends Component {
       size: 6,
       page: 1,
       currPage: null,
-      passData:[],
-      switchButton: true,
+      passData: [],
+      switchButton: true
     };
     this.previousPage = this.previousPage.bind(this);
     this.nextPage = this.nextPage.bind(this);
@@ -53,11 +53,9 @@ export class ImageGrid extends Component {
   handleChange(e) {
     const { value } = e.target;
     const { img } = this.state;
-
     const newSize = +value;
     const newPage = 1;
     const newCurrPage = paginate(img, newPage, newSize);
-
     this.setState({
       ...this.state,
       size: newSize,
@@ -65,28 +63,25 @@ export class ImageGrid extends Component {
       currPage: newCurrPage
     });
   }
-  handleCompare = (item)=> {
-    const passData=[...this.state.passData];
-    passData.push({item})
-    this.setState({passData, switchButton: false})
+  handleCompare = item => {
+    const passData = [...this.state.passData];
+    passData.push({ item });
+    this.setState({ passData, switchButton: false });
   };
 
-  handleRemove = (item)=>{
+  handleRemove = item => {
     const tempArray = this.state.img;
-    var newTempArray = tempArray.filter(tempId=>{
-     return tempId.id!== item.id
-    })
-   
+    var newTempArray = tempArray.filter(tempId => {
+      return tempId.id !== item.id;
+    });
     const newPage = 1;
     const newCurrPage = paginate(newTempArray, newPage);
-
     this.setState({
       ...this.state,
       page: newPage,
       currPage: newCurrPage
     });
-  
-  }
+  };
 
   render() {
     const { page, size, currPage, passData, switchButton } = this.state;
@@ -95,10 +90,18 @@ export class ImageGrid extends Component {
         <section className="stickyElement">
           <div>page: {page}</div>
           <div>size: {size}</div>
-          {switchButton === true ? '' :  <div className="addItem">
-            <button className="btn-info" onClick={()=>this.setState({switchButton:true})}>Compare</button>
-          </div>}
-         
+          {switchButton === true ? (
+            ""
+          ) : (
+            <div className="addItem">
+              <button
+                className="btn-info"
+                onClick={() => this.setState({ switchButton: true })}
+              >
+                Compare
+              </button>
+            </div>
+          )}
           <div>
             <label htmlFor="size">Size</label>
             <select name="size" id="size" onChange={this.handleChange}>
@@ -108,8 +111,7 @@ export class ImageGrid extends Component {
           </div>
         </section>
         <div className="row">
-        
-          {currPage && 
+          {currPage &&
             currPage.data.map(images => {
               return (
                 <div className="col-lg-3 divStyle" key={images.id}>
@@ -130,21 +132,23 @@ export class ImageGrid extends Component {
                   <div className="wrapText">
                     URL:<span>&nbsp;{images.url}</span>
                   </div>
-                  {
-                    this.state.switchButton === true ? <button
-                    onClick={()=>this.handleCompare(images)}
-                    className="button btn-success"
-                  >
-                    Compare
-                  </button> :  <button
-                    onClick={()=>this.handleRemove(images)}
-                    className="button btn-danger"
-                  >
-                    Remove
-                  </button>
-                  }
-                  
-                 
+                  <div className="text-center">
+                  {this.state.switchButton === true ? (
+                    <button
+                      onClick={() => this.handleCompare(images)}
+                      className="button btn-success"
+                    >
+                      Compare
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => this.handleRemove(images)}
+                      className="button btn-danger"
+                    >
+                      Remove
+                    </button>
+                  )}
+                  </div>
                 </div>
               );
             })}
