@@ -12,11 +12,12 @@ export class ImageGrid extends Component {
       page: 1,
       currPage: null,
       passData: [],
-      switchButton: true
+      switchButton: 0
     };
     this.previousPage = this.previousPage.bind(this);
     this.nextPage = this.nextPage.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleCompare = this.handleCompare.bind(this);
   }
   componentDidMount() {
     axios.get("https://jsonplaceholder.typicode.com/photos").then(respose => {
@@ -63,10 +64,10 @@ export class ImageGrid extends Component {
       currPage: newCurrPage
     });
   }
-  handleCompare = item => {
+  handleCompare(item,id){
     const passData = [...this.state.passData];
     passData.push({ item });
-    this.setState({ passData, switchButton: false });
+    this.setState({ passData, switchButton:id});
   };
 
   handleRemove = item => {
@@ -79,7 +80,7 @@ export class ImageGrid extends Component {
     this.setState({
       ...this.state,
       page: newPage,
-      currPage: newCurrPage
+      currPage: newCurrPage,
     });
   };
 
@@ -90,18 +91,6 @@ export class ImageGrid extends Component {
         <section className="stickyElement">
           <div>page: {page}</div>
           <div>size: {size}</div>
-          {switchButton === true ? (
-            ""
-          ) : (
-            <div className="addItem">
-              <button
-                className="btn-info"
-                onClick={() => this.setState({ switchButton: true })}
-              >
-                Compare
-              </button>
-            </div>
-          )}
           <div>
             <label htmlFor="size">Size</label>
             <select name="size" id="size" onChange={this.handleChange}>
@@ -133,9 +122,9 @@ export class ImageGrid extends Component {
                     URL:<span>&nbsp;{images.url}</span>
                   </div>
                   <div className="text-center">
-                  {this.state.switchButton === true ? (
+                  {this.state.switchButton!= images.id ? (
                     <button
-                      onClick={() => this.handleCompare(images)}
+                      onClick={() => this.handleCompare(images,images.id)}
                       className="button btn-success"
                     >
                       Compare
